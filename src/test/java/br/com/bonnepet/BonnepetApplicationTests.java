@@ -1,4 +1,4 @@
-package br.com.lardopet;
+package br.com.bonnepet;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class LardopetApplicationTests {
+public class BonnepetApplicationTests {
 
 	@Test
 	public void contextLoads() {

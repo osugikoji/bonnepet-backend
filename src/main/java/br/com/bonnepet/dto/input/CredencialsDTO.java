@@ -1,4 +1,4 @@
-package br.com.lardopet.dto.input;
+package br.com.bonnepet.dto.input;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

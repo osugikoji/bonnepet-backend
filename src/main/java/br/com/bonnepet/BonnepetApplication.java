@@ -1,13 +1,13 @@
-package br.com.lardopet;
+package br.com.bonnepet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LardopetApplication {
+public class BonnepetApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LardopetApplication.class, args);
+		SpringApplication.run(BonnepetApplication.class, args);
 	}
 
 }

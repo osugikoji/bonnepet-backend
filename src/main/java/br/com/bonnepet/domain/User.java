@@ -1,4 +1,4 @@
-package br.com.lardopet.domain;
+package br.com.bonnepet.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +27,20 @@ public class User implements Serializable {
 
     private String name;
 
-    private Integer telephone;
+    private String telephone;
 
-    private Integer cellphone;
+    private String cellphone;
 
-    public User(String email, String password, String name, Integer telephone, Integer cellphone) {
+    @JoinColumn(name = "address_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+
+    public User(String email, String password, String name, String telephone, String cellphone, Address address) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.telephone = telephone;
         this.cellphone = cellphone;
+        this.address = address;
     }
 }

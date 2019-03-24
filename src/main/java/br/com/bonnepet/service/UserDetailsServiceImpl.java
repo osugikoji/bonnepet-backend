@@ -1,9 +1,9 @@
-package br.com.lardopet.service;
+package br.com.bonnepet.service;
 
 
-import br.com.lardopet.domain.User;
-import br.com.lardopet.repository.UserRepository;
-import br.com.lardopet.security.UserSS;
+import br.com.bonnepet.domain.User;
+import br.com.bonnepet.repository.UserRepository;
+import br.com.bonnepet.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
         if (user != null) {
-            return new UserSS(user.getId(), user.getEmail(), user.getPassword(), "ROLE_ADMIN");
+            return new UserSS(user.getId(), user.getEmail(), user.getPassword(), null);
         }
         throw new UsernameNotFoundException(email);
     }

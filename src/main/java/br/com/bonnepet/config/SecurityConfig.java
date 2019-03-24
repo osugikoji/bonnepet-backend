@@ -1,7 +1,7 @@
-package br.com.lardopet.config;
+package br.com.bonnepet.config;
 
-import br.com.lardopet.security.JWTAuthenticationFilter;
-import br.com.lardopet.security.JWTUtil;
+import br.com.bonnepet.security.JWTAuthenticationFilter;
+import br.com.bonnepet.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

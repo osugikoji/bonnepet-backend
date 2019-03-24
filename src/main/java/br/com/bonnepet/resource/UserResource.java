@@ -1,4 +1,4 @@
-package br.com.lardopet.resource;
+package br.com.bonnepet.resource;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

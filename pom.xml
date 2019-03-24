@@ -8,10 +8,10 @@
 		<version>2.1.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.lardopet</groupId>
-	<artifactId>lardopet</artifactId>
+	<groupId>br.com.bonnepet</groupId>
+	<artifactId>bonnepet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lardopet</name>
+	<name>bonnepet</name>
 	<description>Projeto de hospedagem de animais</description>
 
 	<properties>

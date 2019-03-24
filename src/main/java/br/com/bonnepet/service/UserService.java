@@ -1,4 +1,4 @@
-package br.com.lardopet.service;
+package br.com.bonnepet.service;
 
 import org.springframework.stereotype.Service;
 

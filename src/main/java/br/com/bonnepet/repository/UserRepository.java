@@ -1,6 +1,6 @@
-package br.com.lardopet.repository;
+package br.com.bonnepet.repository;
 
-import br.com.lardopet.domain.User;
+import br.com.bonnepet.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

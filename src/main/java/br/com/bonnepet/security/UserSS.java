@@ -1,4 +1,4 @@
-package br.com.lardopet.security;
+package br.com.bonnepet.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

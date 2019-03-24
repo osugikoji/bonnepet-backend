@@ -1,4 +1,4 @@
-package br.com.lardopet.security;
+package br.com.bonnepet.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

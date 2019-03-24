@@ -1,6 +1,6 @@
-package br.com.lardopet.config;
+package br.com.bonnepet.config;
 
-import br.com.lardopet.service.DBService;
+import br.com.bonnepet.service.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

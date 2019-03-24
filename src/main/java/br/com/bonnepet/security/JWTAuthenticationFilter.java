@@ -1,6 +1,6 @@
-package br.com.lardopet.security;
+package br.com.bonnepet.security;
 
-import br.com.lardopet.dto.input.CredencialsDTO;
+import br.com.bonnepet.dto.input.CredencialsDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
