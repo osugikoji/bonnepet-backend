@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -27,6 +28,8 @@ public class User implements Serializable {
 
     private String name;
 
+    private Date birthDate;
+
     private String telephone;
 
     private String cellphone;
@@ -35,10 +38,11 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    public User(String email, String password, String name, String telephone, String cellphone, Address address) {
+    public User(String email, String password, String name, Date birthDate, String telephone, String cellphone, Address address) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.birthDate = birthDate;
         this.telephone = telephone;
         this.cellphone = cellphone;
         this.address = address;
