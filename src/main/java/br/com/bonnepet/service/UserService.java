@@ -7,9 +7,11 @@ import br.com.bonnepet.dto.input.NewUserDTO;
 import br.com.bonnepet.helper.DateHelper;
 import br.com.bonnepet.repository.CityRepository;
 import br.com.bonnepet.repository.UserRepository;
+import br.com.bonnepet.security.UserSS;
 import br.com.bonnepet.service.exception.ExceptionMessages;
 import br.com.bonnepet.service.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +44,13 @@ public class UserService {
                 newUserDTO.getCellphone(), address);
 
         return userRepository.save(user);
+    }
+
+    public static UserSS authenticated() {
+        try {
+            return (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
