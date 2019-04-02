@@ -56,9 +56,9 @@ public class DBService {
 
     private List<User> createUsers() {
         String password = bCryptPasswordEncoder.encode("123");
-        User user1 = new User("koji097@gmail.com", password, "Koji", DateHelper.parseToDate("08/03/1997"),
+        User user1 = new User("","koji097@gmail.com", password, "Koji", DateHelper.parseToDate("08/03/1997"),
                 "19382252031", "19963546987", addressList.get(0));
-        User user2 = new User("zullo@gmail.com", password, "Joao", DateHelper.parseToDate("01/02/1992"),
+        User user2 = new User("","zullo@gmail.com", password, "Joao", DateHelper.parseToDate("01/02/1992"),
                 "19385557731", "19965345698", addressList.get(1));
         return new ArrayList<>(Arrays.asList(user1,user2));
     }

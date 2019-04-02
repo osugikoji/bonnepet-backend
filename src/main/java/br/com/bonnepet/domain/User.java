@@ -20,6 +20,8 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String pictureUrl;
+
     @Column(unique = true)
     private String email;
 
@@ -38,7 +40,8 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    public User(String email, String password, String name, Date birthDate, String telephone, String cellphone, Address address) {
+    public User(String pictureUrl, String email, String password, String name, Date birthDate, String telephone, String cellphone, Address address) {
+        this.pictureUrl = pictureUrl;
         this.email = email;
         this.password = password;
         this.name = name;

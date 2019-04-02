@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
-            "/users/insert-user/**",
+            "/users/insert",
+            "/users/{id}/picture"
     };
 
     @Override
