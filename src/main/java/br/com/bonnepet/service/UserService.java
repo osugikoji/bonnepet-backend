@@ -3,6 +3,7 @@ package br.com.bonnepet.service;
 import br.com.bonnepet.domain.Address;
 import br.com.bonnepet.domain.City;
 import br.com.bonnepet.domain.User;
+import br.com.bonnepet.dto.AddressDTO;
 import br.com.bonnepet.dto.UserDTO;
 import br.com.bonnepet.helper.DateHelper;
 import br.com.bonnepet.repository.CityRepository;
@@ -39,14 +40,16 @@ public class UserService {
     private static final String USER_PROFILE_IMAGE_FILE = "user-profile/user";
 
     public UserDTO insertUser(UserDTO userDTO) {
-
         if (userRepository.findByEmail(userDTO.getEmail()) != null) {
             throw new ValidationException(ExceptionMessages.EMAIL_EXIST);
         }
-        City city = cityRepository.findByName(userDTO.getCity());
 
-        Address address = new Address(userDTO.getCep(), userDTO.getDistrict(), userDTO.getStreet(),
-                userDTO.getNumber(), city);
+        AddressDTO addressDTO = userDTO.getAddressDTO();
+
+        City city = cityRepository.findByName(addressDTO.getCity());
+
+        Address address = new Address(addressDTO.getCep(), addressDTO.getDistrict(), addressDTO.getStreet(),
+                addressDTO.getNumber(), city);
 
         String passwordEncoded = passwordEncoder.encode(userDTO.getPassword());
 

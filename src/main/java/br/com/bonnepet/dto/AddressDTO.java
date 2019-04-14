@@ -1,43 +1,32 @@
 package br.com.bonnepet.dto;
 
-import br.com.bonnepet.domain.User;
 import br.com.bonnepet.service.exception.ExceptionMessages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 
-/*DTO que recebe os dados de cadastro do usuario*/
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private String id;
+public class AddressDTO {
 
     @NotEmpty(message = ExceptionMessages.REQUIRED_FIELD)
-    private String email;
+    private String cep;
 
     @NotEmpty(message = ExceptionMessages.REQUIRED_FIELD)
-    private String password;
+    private String district;
 
     @NotEmpty(message = ExceptionMessages.REQUIRED_FIELD)
-    private String name;
+    private String street;
 
     @NotEmpty(message = ExceptionMessages.REQUIRED_FIELD)
-    private String birthDate;
+    private String number;
 
     @NotEmpty(message = ExceptionMessages.REQUIRED_FIELD)
-    private String cellphone;
+    private String state;
 
-    private String telephone;
-
-    private AddressDTO addressDTO;
-
-    public UserDTO(User user) {
-        this.id = user.getId().toString();
-    }
+    @NotEmpty(message = ExceptionMessages.REQUIRED_FIELD)
+    private String city;
 }
