@@ -21,6 +21,8 @@ public class ImageService {
 
 	private static final String JPG_FORMAT = "jpg";
 
+	private static final String JPEG_FORMAT = "jpeg";
+
 	private static final String PNG_FORMAT = "png";
 
 	public InputStream getProfileFormat(MultipartFile multipartFile) {
@@ -33,7 +35,7 @@ public class ImageService {
 
 	private BufferedImage getJpgImageFromFile(MultipartFile uploadedFile) {
 		String ext = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
-		if(!PNG_FORMAT.equals(ext) && !JPG_FORMAT.equals(ext)) {
+		if(!PNG_FORMAT.equals(ext) && !JPG_FORMAT.equals(ext) && !JPEG_FORMAT.equals(ext)) {
 			throw new FileException("Somente imagens PNG e JPG são permitidas");
 		}
 		

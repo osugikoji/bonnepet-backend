@@ -20,7 +20,7 @@
 
      @PostMapping("/refresh_token")
      public ResponseEntity<Void> refreshToken(HttpServletResponse response){
-         UserSS user = UserService.authenticated();
+         UserSS user = UserService.getUserAuthentication();
          String token = jwtUtil.generateToken(user.getUsername(), user.getId());
          response.addHeader("Authorization", "Bearer " + token);
          response.addHeader("access-control-expose-headers", "Authorization");
