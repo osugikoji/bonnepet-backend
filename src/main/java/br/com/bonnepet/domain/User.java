@@ -1,5 +1,7 @@
 package br.com.bonnepet.domain;
 
+import br.com.bonnepet.dto.output.ProfileDTO;
+import br.com.bonnepet.helper.DateHelper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +50,15 @@ public class User implements Serializable {
         this.birthDate = birthDate;
         this.telephone = telephone;
         this.cellphone = cellphone;
+        this.address = address;
+    }
+
+    public User(ProfileDTO profileDTO) {
+        this.email = profileDTO.getEmail();
+        this.name = profileDTO.getUserName();
+        this.birthDate = DateHelper.parseToDate(profileDTO.getBirthDate());
+        this.telephone = profileDTO.getTelephone();
+        this.cellphone = profileDTO.getCellphone();
         this.address = address;
     }
 }

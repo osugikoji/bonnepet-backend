@@ -15,4 +15,9 @@ public class DateHelper {
             return null;
         }
     }
+
+    public static String parseToDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(date);
+    }
 }

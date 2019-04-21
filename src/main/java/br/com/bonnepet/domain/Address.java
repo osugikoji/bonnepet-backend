@@ -1,5 +1,6 @@
 package br.com.bonnepet.domain;
 
+import br.com.bonnepet.dto.AddressDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,5 +33,14 @@ public class Address implements Serializable {
         this.street = street;
         this.number = number;
         this.city = city;
+    }
+
+    public Address(AddressDTO addressDTO) {
+        this.cep = addressDTO.getCep();
+        this.district = addressDTO.getDistrict();
+        this.street = addressDTO.getStreet();
+        this.number = addressDTO.getNumber();
+        this.city.setName(addressDTO.getCity());
+        this.city.getState().setName(addressDTO.getState());
     }
 }

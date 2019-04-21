@@ -1,7 +1,9 @@
 package br.com.bonnepet.resource;
 
-import br.com.bonnepet.dto.ProfileDTO;
-import br.com.bonnepet.dto.UserDTO;
+import br.com.bonnepet.dto.input.EditProfileDTO;
+import br.com.bonnepet.dto.output.PictureDTO;
+import br.com.bonnepet.dto.output.ProfileDTO;
+import br.com.bonnepet.dto.input.NewUserDTO;
 import br.com.bonnepet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,15 @@ public class UserResource {
     private UserService userService;
 
     @PostMapping("/insert")
-    public ResponseEntity<UserDTO> insertUser(@Valid @RequestBody UserDTO userDTO) {
-        userDTO = userService.insertUser(userDTO);
-        return ResponseEntity.ok(userDTO);
+    public ResponseEntity<NewUserDTO> insertUser(@Valid @RequestBody NewUserDTO newUserDTO) {
+        newUserDTO = userService.insertUser(newUserDTO);
+        return ResponseEntity.ok(newUserDTO);
+    }
+
+    @PutMapping("/updateUser")
+    public ResponseEntity<EditProfileDTO> updateUser(@Valid @RequestBody EditProfileDTO editProfileDTO) {
+        editProfileDTO = userService.updateUser(editProfileDTO);
+        return ResponseEntity.ok(editProfileDTO);
     }
 
     @GetMapping("/getUserProfile")
@@ -30,8 +38,8 @@ public class UserResource {
     }
 
     @PostMapping("/{id}/picture")
-    public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file, @PathVariable Integer id) {
-        userService.uploadProfilePicture(id,file);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<PictureDTO> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file, @PathVariable Integer id) {
+        PictureDTO pictureDTO = userService.uploadProfilePicture(id, file);
+        return ResponseEntity.ok(pictureDTO);
     }
 }

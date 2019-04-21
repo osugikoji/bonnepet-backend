@@ -1,6 +1,7 @@
-package br.com.bonnepet.dto;
+package br.com.bonnepet.dto.input;
 
 import br.com.bonnepet.domain.User;
+import br.com.bonnepet.dto.AddressDTO;
 import br.com.bonnepet.service.exception.ExceptionMessages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO implements Serializable {
+public class NewUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String id;
@@ -37,7 +38,7 @@ public class UserDTO implements Serializable {
 
     private AddressDTO addressDTO;
 
-    public UserDTO(User user) {
+    public NewUserDTO(User user) {
         this.id = user.getId().toString();
     }
 }
