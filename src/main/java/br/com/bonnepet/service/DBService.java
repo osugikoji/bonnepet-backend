@@ -5,7 +5,6 @@ import br.com.bonnepet.domain.City;
 import br.com.bonnepet.domain.State;
 import br.com.bonnepet.domain.User;
 import br.com.bonnepet.helper.DateHelper;
-import br.com.bonnepet.repository.AddressRepository;
 import br.com.bonnepet.repository.CityRepository;
 import br.com.bonnepet.repository.StateRepository;
 import br.com.bonnepet.repository.UserRepository;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**

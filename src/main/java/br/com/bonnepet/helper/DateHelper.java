@@ -17,7 +17,11 @@ public class DateHelper {
     }
 
     public static String parseToDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(date);
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            return formatter.format(date);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

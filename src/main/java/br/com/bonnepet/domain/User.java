@@ -2,6 +2,7 @@ package br.com.bonnepet.domain;
 
 import br.com.bonnepet.dto.output.ProfileDTO;
 import br.com.bonnepet.helper.DateHelper;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class User implements Serializable {
 
     private String name;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date birthDate;
 
     private String telephone;
