@@ -10,7 +10,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -43,6 +45,9 @@ public class User implements Serializable {
     @JoinColumn(name = "address_id")
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
+    @OneToMany(mappedBy = "user")
+    private List<Pet> pets = new ArrayList<>();
 
     public User(String pictureUrl, String email, String password, String name, Date birthDate, String telephone, String cellphone, Address address) {
         this.pictureUrl = pictureUrl;

@@ -1,13 +1,11 @@
 package br.com.bonnepet.service;
 
-import br.com.bonnepet.domain.Address;
-import br.com.bonnepet.domain.City;
-import br.com.bonnepet.domain.State;
-import br.com.bonnepet.domain.User;
+import br.com.bonnepet.domain.*;
+import br.com.bonnepet.domain.enums.BehaviourEnum;
+import br.com.bonnepet.domain.enums.GenderEnum;
+import br.com.bonnepet.domain.enums.PetSizeEnum;
 import br.com.bonnepet.helper.DateHelper;
-import br.com.bonnepet.repository.CityRepository;
-import br.com.bonnepet.repository.StateRepository;
-import br.com.bonnepet.repository.UserRepository;
+import br.com.bonnepet.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,6 +32,12 @@ public class DBService {
     @Autowired
     private CityRepository cityRepository;
 
+    @Autowired
+    private BehaviourRepository behaviourRepository;
+
+    @Autowired
+    private PetRepository petRepository;
+
     private List<State> stateList;
 
     private List<City> cityList;
@@ -42,30 +46,56 @@ public class DBService {
 
     private List<User> userList;
 
+    private List<Behaviour> behaviourList;
 
     public void instantiateDataBase() {
-        this.stateList = createStates();
-        this.cityList = createCities();
-        this.addressList = createAddresses();
-        this.userList = createUsers();
+        stateList = createStates();
+        cityList = createCities();
+        addressList = createAddresses();
+        userList = createUsers();
+        behaviourList = createBehaviours();
 
-        userRepository.saveAll(userList);
+
+        Pet pet = new Pet("", "Jorge", "Akita", GenderEnum.MALE.name(),
+                DateHelper.parseToDate("08/03/2019"), PetSizeEnum.MEDIUM.name(), "Possui alergia a peixe", userList.get(0));
+        pet.getBehaviours().addAll(Arrays.asList(behaviourList.get(0), behaviourList.get(1)));
+
+        petRepository.save(pet);
+
+        userList.get(0).getPets().add(pet);
+
+        userRepository.save(userList.get(0));
+    }
+
+    private List<Behaviour> createBehaviours() {
+        Behaviour confident = new Behaviour(BehaviourEnum.CONFIDENT.name());
+        Behaviour shy = new Behaviour(BehaviourEnum.SHY.name());
+        Behaviour aggressive = new Behaviour(BehaviourEnum.AGGRESSIVE.name());
+        Behaviour sociable = new Behaviour(BehaviourEnum.SOCIABLE.name());
+        Behaviour independent = new Behaviour(BehaviourEnum.INDEPENDENT.name());
+
+        List<Behaviour> behaviours = new ArrayList<>(Arrays.asList(confident, shy, aggressive, sociable, independent));
+        behaviourRepository.saveAll(behaviours);
+
+        return behaviours;
     }
 
     private List<User> createUsers() {
         String password = bCryptPasswordEncoder.encode("123");
-        User user1 = new User("","koji097@gmail.com", password, "Koji", DateHelper.parseToDate("08/03/1997"),
+        User user1 = new User("", "koji097@gmail.com", password, "Koji", DateHelper.parseToDate("08/03/1997"),
                 "19382252031", "19963546987", addressList.get(0));
-        User user2 = new User("","zullo@gmail.com", password, "Joao", DateHelper.parseToDate("01/02/1992"),
+        User user2 = new User("", "zullo@gmail.com", password, "Joao", DateHelper.parseToDate("01/02/1992"),
                 "19385557731", "19965345698", addressList.get(1));
-        return new ArrayList<>(Arrays.asList(user1,user2));
+
+        userRepository.saveAll(new ArrayList<>(Arrays.asList(user1, user2)));
+        return new ArrayList<>(Arrays.asList(user1, user2));
     }
 
     private List<Address> createAddresses() {
 
         Address address1 = new Address("33343355", "Jardim Recanto", "Jose Bernardinetti", "99", cityList.get(0));
         Address address2 = new Address("35343311", "Barao Geraldo", "Mokarzil", "99", cityList.get(1));
-        addressList = new ArrayList<>(Arrays.asList(address1,address2));
+        addressList = new ArrayList<>(Arrays.asList(address1, address2));
         return addressList;
     }
 
