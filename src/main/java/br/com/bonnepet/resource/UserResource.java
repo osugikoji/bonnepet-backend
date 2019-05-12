@@ -1,9 +1,9 @@
 package br.com.bonnepet.resource;
 
-import br.com.bonnepet.dto.input.EditProfileDTO;
-import br.com.bonnepet.dto.output.PictureDTO;
-import br.com.bonnepet.dto.output.ProfileDTO;
-import br.com.bonnepet.dto.input.NewUserDTO;
+import br.com.bonnepet.dto.EditProfileDTO;
+import br.com.bonnepet.dto.PictureDTO;
+import br.com.bonnepet.dto.ProfileDTO;
+import br.com.bonnepet.dto.NewUserDTO;
 import br.com.bonnepet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

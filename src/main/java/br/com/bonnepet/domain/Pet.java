@@ -1,6 +1,6 @@
 package br.com.bonnepet.domain;
 
-import br.com.bonnepet.dto.input.PetDTO;
+import br.com.bonnepet.dto.PetDTO;
 import br.com.bonnepet.helper.DateHelper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

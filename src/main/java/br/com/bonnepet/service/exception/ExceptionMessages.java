@@ -7,4 +7,6 @@ public class ExceptionMessages {
     public final static String EMAIL_EXIST = "Esse email já é utilizado";
 
     public final static String ACCESS_DENIED = "Acesso negado";
+
+    public final static String ALREADY_HOST = "Você já é um Host";
 }

@@ -1,4 +1,4 @@
-package br.com.bonnepet.dto.input;
+package br.com.bonnepet.dto;
 
 import br.com.bonnepet.domain.Behaviour;
 import br.com.bonnepet.domain.Pet;

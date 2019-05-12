@@ -1,4 +1,4 @@
-package br.com.bonnepet.dto.output;
+package br.com.bonnepet.dto;
 
 import br.com.bonnepet.domain.User;
 import br.com.bonnepet.dto.AddressDTO;

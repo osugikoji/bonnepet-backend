@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +39,12 @@ public class DBService {
     @Autowired
     private PetRepository petRepository;
 
+    @Autowired
+    private HostRepository hostRepository;
+
+    @Autowired
+    private SizeRepository sizeRepository;
+
     private List<State> stateList;
 
     private List<City> cityList;
@@ -48,22 +55,34 @@ public class DBService {
 
     private List<Behaviour> behaviourList;
 
+    private List<Size> sizeList;
+
     public void instantiateDataBase() {
         stateList = createStates();
         cityList = createCities();
         addressList = createAddresses();
         userList = createUsers();
         behaviourList = createBehaviours();
+        sizeList = createSizes();
+        createPet();
+        createHost();
 
+    }
 
+    private void createPet() {
         Pet pet = new Pet("", "Jorge", "Akita", GenderEnum.MALE.name(),
                 DateHelper.parseToDate("08/03/2019"), PetSizeEnum.MEDIUM.name(), "Possui alergia a peixe", userList.get(0));
         pet.getBehaviours().addAll(Arrays.asList(behaviourList.get(0), behaviourList.get(1)));
-
         petRepository.save(pet);
-
         userList.get(0).getPets().add(pet);
+        userRepository.save(userList.get(0));
+    }
 
+    private void createHost() {
+        Host host = new Host(userList.get(0), BigDecimal.valueOf(100), "nada");
+        host.getPreferenceSizes().addAll(sizeList);
+        userList.get(0).setHost(host);
+        hostRepository.save(host);
         userRepository.save(userList.get(0));
     }
 
@@ -78,6 +97,17 @@ public class DBService {
         behaviourRepository.saveAll(behaviours);
 
         return behaviours;
+    }
+
+    private List<Size> createSizes() {
+        Size small = new Size(PetSizeEnum.SMALL.name());
+        Size medium = new Size(PetSizeEnum.MEDIUM.name());
+        Size large = new Size(PetSizeEnum.LARGE.name());
+
+        List<Size> sizes = new ArrayList<>(Arrays.asList(small, medium, large));
+        sizeRepository.saveAll(sizes);
+
+        return sizes;
     }
 
     private List<User> createUsers() {

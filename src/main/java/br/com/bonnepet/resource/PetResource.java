@@ -1,6 +1,6 @@
 package br.com.bonnepet.resource;
 
-import br.com.bonnepet.dto.input.PetDTO;
+import br.com.bonnepet.dto.PetDTO;
 import br.com.bonnepet.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

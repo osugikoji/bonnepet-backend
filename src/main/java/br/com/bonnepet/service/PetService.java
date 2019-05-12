@@ -3,7 +3,7 @@ package br.com.bonnepet.service;
 import br.com.bonnepet.domain.Behaviour;
 import br.com.bonnepet.domain.Pet;
 import br.com.bonnepet.domain.User;
-import br.com.bonnepet.dto.input.PetDTO;
+import br.com.bonnepet.dto.PetDTO;
 import br.com.bonnepet.repository.BehaviourRepository;
 import br.com.bonnepet.repository.PetRepository;
 import br.com.bonnepet.repository.UserRepository;

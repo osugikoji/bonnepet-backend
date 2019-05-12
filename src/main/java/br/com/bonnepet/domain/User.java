@@ -1,6 +1,6 @@
 package br.com.bonnepet.domain;
 
-import br.com.bonnepet.dto.output.ProfileDTO;
+import br.com.bonnepet.dto.ProfileDTO;
 import br.com.bonnepet.helper.DateHelper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,10 +46,15 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Host host;
+
     @OneToMany(mappedBy = "user")
     private List<Pet> pets = new ArrayList<>();
 
-    public User(String pictureUrl, String email, String password, String name, Date birthDate, String telephone, String cellphone, Address address) {
+    public User(String pictureUrl, String email, String password, String name, Date birthDate, String telephone,
+                String cellphone, Address address) {
         this.pictureUrl = pictureUrl;
         this.email = email;
         this.password = password;
@@ -66,6 +71,5 @@ public class User implements Serializable {
         this.birthDate = DateHelper.parseToDate(profileDTO.getBirthDate());
         this.telephone = profileDTO.getTelephone();
         this.cellphone = profileDTO.getCellphone();
-        this.address = address;
     }
 }
