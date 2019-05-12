@@ -1,8 +1,10 @@
 package br.com.bonnepet.service;
 
+import br.com.bonnepet.domain.Behaviour;
 import br.com.bonnepet.domain.Pet;
 import br.com.bonnepet.domain.User;
 import br.com.bonnepet.dto.input.PetDTO;
+import br.com.bonnepet.repository.BehaviourRepository;
 import br.com.bonnepet.repository.PetRepository;
 import br.com.bonnepet.repository.UserRepository;
 import br.com.bonnepet.security.UserSS;
@@ -26,6 +28,9 @@ public class PetService {
     private PetRepository petRepository;
 
     @Autowired
+    private BehaviourRepository behaviourRepository;
+
+    @Autowired
     private S3Service s3Service;
 
     public PetDTO insertPet(PetDTO petDTO) {
@@ -37,6 +42,10 @@ public class PetService {
         User user = userRepository.findById(userSS.getId()).orElse(new User());
 
         Pet pet = new Pet(petDTO, user);
+
+        List<Behaviour> behaviourList = behaviourRepository.findAllByNameIn(petDTO.getBehaviours());
+
+        pet.getBehaviours().addAll(behaviourList);
 
         pet = petRepository.save(pet);
 
