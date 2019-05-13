@@ -69,7 +69,8 @@ public class HostService {
             for (Pet pet : host.getUser().getPets()) {
                 petDTOList.add(new PetDTO(pet));
             }
-            hostDTO = new HostDTO(profileDTO, petDTOList, host.getPrice().toString(), host.getPreferenceSizes(), host.getAbout());
+            hostDTO = new HostDTO(profileDTO, petDTOList, host.getPrice().toBigInteger().toString(), host.getPreferenceSizes(), host.getAbout());
+            hostDTO.setId(host.getId().toString());
             hostReturnList.add(hostDTO);
         }
 

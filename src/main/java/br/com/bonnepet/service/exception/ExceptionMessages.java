@@ -9,4 +9,8 @@ public class ExceptionMessages {
     public final static String ACCESS_DENIED = "Acesso negado";
 
     public final static String ALREADY_HOST = "Você já é um Host";
+
+    public final static String CANNOT_BOOK_YOURSELF = "Você não pode reservar para si mesmo";
+
+    public final static String BOOK_ALREADY_REQUESTED = "Reserva já solicitada";
 }

@@ -50,6 +50,11 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Host host;
 
+    @JsonIgnore
+    @JoinColumn(name = "book_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Booking booking;
+
     @OneToMany(mappedBy = "user")
     private List<Pet> pets = new ArrayList<>();
 

@@ -37,6 +37,9 @@ public class Host implements Serializable {
 
     private String about;
 
+    @OneToMany
+    private List<Booking> bookings = new ArrayList<>();
+
     public Host(User user, BigDecimal price, String about) {
         this.user = user;
         this.price = price;

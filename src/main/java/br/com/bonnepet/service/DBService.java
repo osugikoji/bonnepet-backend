@@ -66,24 +66,46 @@ public class DBService {
         sizeList = createSizes();
         createPet();
         createHost();
-
     }
 
     private void createPet() {
-        Pet pet = new Pet("", "Jorge", "Akita", GenderEnum.MALE.name(),
-                DateHelper.parseToDate("08/03/2019"), PetSizeEnum.MEDIUM.name(), "Possui alergia a peixe", userList.get(0));
-        pet.getBehaviours().addAll(Arrays.asList(behaviourList.get(0), behaviourList.get(1)));
-        petRepository.save(pet);
-        userList.get(0).getPets().add(pet);
+        Pet pet1 = new Pet(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjs6srps1gQqrzujdY5jWx77GtXhiGC5zAHgvWTjhR-GrLTQuS",
+                "Tomy",
+                "Akita",
+                GenderEnum.MALE.name(),
+                DateHelper.parseToDate("08/03/2019"),
+                PetSizeEnum.MEDIUM.name(),
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+                userList.get(0));
+        pet1.getBehaviours().addAll(Arrays.asList(behaviourList.get(0), behaviourList.get(1)));
+
+        Pet pet2 = new Pet(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAu3262iyGDFqBRb_NdSRgn9NGI9M7C1NNzuubwgGWhhfg1ZdoCA",
+                "Greeg",
+                "Shi-Tzu",
+                GenderEnum.FEMALE.name(),
+                DateHelper.parseToDate("08/03/2018"),
+                PetSizeEnum.SMALL.name(),
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+                userList.get(0));
+        pet2.getBehaviours().addAll(Arrays.asList(behaviourList.get(0), behaviourList.get(1), behaviourList.get(2)));
+        userList.get(0).getPets().addAll(Arrays.asList(pet1,pet2));
         userRepository.save(userList.get(0));
+        petRepository.saveAll(Arrays.asList(pet1,pet2));
     }
 
     private void createHost() {
-        Host host = new Host(userList.get(0), BigDecimal.valueOf(100), "nada");
-        host.getPreferenceSizes().addAll(sizeList);
-        userList.get(0).setHost(host);
-        hostRepository.save(host);
-        userRepository.save(userList.get(0));
+        Host host1 = new Host(userList.get(0), BigDecimal.valueOf(100), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua");
+        host1.getPreferenceSizes().addAll(sizeList);
+        userList.get(0).setHost(host1);
+
+        Host host2 = new Host(userList.get(1), BigDecimal.valueOf(200), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua");
+        host2.getPreferenceSizes().addAll(Arrays.asList(sizeList.get(0), sizeList.get(1)));
+        userList.get(1).setHost(host2);
+
+        hostRepository.saveAll(Arrays.asList(host1, host2));
+        userRepository.saveAll(Arrays.asList(userList.get(0), userList.get(1)));
     }
 
     private List<Behaviour> createBehaviours() {
@@ -112,10 +134,42 @@ public class DBService {
 
     private List<User> createUsers() {
         String password = bCryptPasswordEncoder.encode("123");
-        User user1 = new User("", "koji097@gmail.com", password, "Koji", DateHelper.parseToDate("08/03/1997"),
-                "19382252031", "19963546987", addressList.get(0));
-        User user2 = new User("", "zullo@gmail.com", password, "Joao", DateHelper.parseToDate("01/02/1992"),
-                "19385557731", "19965345698", addressList.get(1));
+        User user1 = new User(
+                "https://scontent.fcpq4-1.fna.fbcdn.net/v/t1.0-9/47379592_2006731116109305_1469582824796323840_n.jpg?_nc_cat=101&_nc_ht=scontent.fcpq4-1.fna&oh=46926d22a40fa23e99573af91331eaba&oe=5D6F7DDF",
+                "koji@gmail.com",
+                password,
+                "Koji",
+                DateHelper.parseToDate("08/03/1997"),
+                "19382252031",
+                "19963546987",
+                addressList.get(0));
+        User user2 = new User(
+                "https://scontent.fcpq4-1.fna.fbcdn.net/v/t1.0-9/31654_1442854674748_7588399_n.jpg?_nc_cat=109&_nc_ht=scontent.fcpq4-1.fna&oh=9dc88bf534c5ad21d7052966b97c8b65&oe=5D705CE1",
+                "zullo@gmail.com",
+                password,
+                "Joao",
+                DateHelper.parseToDate("01/02/1995"),
+                "19385557731",
+                "19965345698",
+                addressList.get(1));
+        User user3 = new User(
+                "https://scontent.fcpq4-1.fna.fbcdn.net/v/t1.0-1/p160x160/38679668_1849579558460524_8769734777847676928_n.jpg?_nc_cat=110&_nc_ht=scontent.fcpq4-1.fna&oh=ad2d76c3ca5018fac7b48d79f96bdde0&oe=5D7341BA",
+                "samuel@gmail.com",
+                password,
+                "Samuel",
+                DateHelper.parseToDate("01/02/1997"),
+                "19385557731",
+                "19965345698",
+                addressList.get(1));
+        User user4 = new User(
+                "https://scontent.fcpq4-1.fna.fbcdn.net/v/t1.0-9/53089473_2507472172600588_8239496085626683392_n.jpg?_nc_cat=104&_nc_ht=scontent.fcpq4-1.fna&oh=3fbf297780456120f10f9f3a509b2ac4&oe=5D2E9921",
+                "josi@gmail.com",
+                password,
+                "Josi",
+                DateHelper.parseToDate("01/02/1992"),
+                "19385557731",
+                "19965345698",
+                addressList.get(1));
 
         userRepository.saveAll(new ArrayList<>(Arrays.asList(user1, user2)));
         return new ArrayList<>(Arrays.asList(user1, user2));
