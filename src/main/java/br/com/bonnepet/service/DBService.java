@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -90,9 +91,22 @@ public class DBService {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
                 userList.get(0));
         pet2.getBehaviours().addAll(Arrays.asList(behaviourList.get(0), behaviourList.get(1), behaviourList.get(2)));
-        userList.get(0).getPets().addAll(Arrays.asList(pet1,pet2));
-        userRepository.save(userList.get(0));
-        petRepository.saveAll(Arrays.asList(pet1,pet2));
+        userList.get(0).getPets().addAll(Arrays.asList(pet1, pet2));
+
+        Pet pet3 = new Pet(
+                "",
+                "Jorge",
+                "Shi-Tzu",
+                GenderEnum.MALE.name(),
+                DateHelper.parseToDate("08/03/2018"),
+                PetSizeEnum.SMALL.name(),
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+                userList.get(2));
+        pet3.getBehaviours().addAll(Arrays.asList(behaviourList.get(0), behaviourList.get(1), behaviourList.get(2)));
+        userList.get(2).getPets().add(pet3);
+
+        petRepository.saveAll(Arrays.asList(pet1, pet2, pet3));
+        userRepository.saveAll(Arrays.asList(userList.get(0), userList.get(2)));
     }
 
     private void createHost() {
@@ -171,8 +185,8 @@ public class DBService {
                 "19965345698",
                 addressList.get(1));
 
-        userRepository.saveAll(new ArrayList<>(Arrays.asList(user1, user2)));
-        return new ArrayList<>(Arrays.asList(user1, user2));
+        userRepository.saveAll(new ArrayList<>(Arrays.asList(user1, user2, user3, user4)));
+        return new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
     }
 
     private List<Address> createAddresses() {

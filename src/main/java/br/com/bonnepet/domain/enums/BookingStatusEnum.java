@@ -4,7 +4,8 @@ public enum BookingStatusEnum {
 
     OPEN(0),
     CONFIRMED(1),
-    REFUSED(2);
+    REFUSED(2),
+    FINALIZED(3);
 
     private int cod;
 

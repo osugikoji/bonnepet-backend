@@ -4,6 +4,7 @@ import br.com.bonnepet.domain.Booking;
 import br.com.bonnepet.domain.Host;
 import br.com.bonnepet.domain.Pet;
 import br.com.bonnepet.domain.User;
+import br.com.bonnepet.domain.enums.BookingStatusEnum;
 import br.com.bonnepet.dto.NewBookingDTO;
 import br.com.bonnepet.repository.BookingRepository;
 import br.com.bonnepet.repository.HostRepository;
@@ -50,12 +51,17 @@ public class BookingService {
             throw new ValidationException(ExceptionMessages.CANNOT_BOOK_YOURSELF);
         }
 
-        if (host.getBookings().contains(user.getBooking())) {
-            throw new ValidationException(ExceptionMessages.BOOK_ALREADY_REQUESTED);
+        List<Booking> userAndHostBookings = bookingRepository.findBookingsByHostAndUser(host, user);
+        for (Booking booking : userAndHostBookings) {
+            if (!BookingStatusEnum.FINALIZED.name().equals(booking.getStatus())) {
+                throw new ValidationException(ExceptionMessages.BOOK_ALREADY_REQUESTED);
+            }
         }
 
         List<Integer> petIds = new ArrayList<>();
-        for (String petId : newBookingDTO.getPetIds()) petIds.add(Integer.parseInt(petId));
+        for (String petId : newBookingDTO.getPetIds()) {
+            petIds.add(Integer.parseInt(petId));
+        }
 
         List<Pet> petList = petRepository.findAllByIdIn(petIds);
 
@@ -65,7 +71,7 @@ public class BookingService {
         booking.setUser(user);
         bookingRepository.save(booking);
 
-        user.setBooking(booking);
+        user.getBookings().add(booking);
         userRepository.save(user);
 
         host.getBookings().add(booking);

@@ -1,7 +1,6 @@
 package br.com.bonnepet.dto;
 
 import br.com.bonnepet.domain.User;
-import br.com.bonnepet.dto.AddressDTO;
 import br.com.bonnepet.helper.DateHelper;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ProfileDTO {
+
+    private String id;
 
     private String profileImageURL;
 
@@ -27,6 +28,7 @@ public class ProfileDTO {
     private AddressDTO addressDTO;
 
     public ProfileDTO(User user) {
+        id = user.getId().toString();
         profileImageURL = user.getPictureUrl();
         email = user.getEmail();
         userName = user.getName();

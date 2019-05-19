@@ -36,14 +36,14 @@ public class Booking implements Serializable {
     private String totalPrice;
 
     @JoinColumn(name = "user_id")
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @JoinColumn(name = "host_id")
     @ManyToOne
     private Host host;
 
-    @OneToMany
+    @ManyToMany
     private List<Pet> petList = new ArrayList<>();
 
     public Booking(String status, Date stayInitialDate, Date stayFinalDate, String totalPrice, User user, List<Pet> petList) {

@@ -23,6 +23,12 @@ public class HostResource {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<HostDTO> getHost(@PathVariable Integer id) {
+        HostDTO hostDTO = hostService.getHost(id);
+        return ResponseEntity.ok(hostDTO);
+    }
+
     @GetMapping()
     public ResponseEntity<List<HostDTO>> getAllHosts() {
         List<HostDTO> petList = hostService.getAllHosts();
