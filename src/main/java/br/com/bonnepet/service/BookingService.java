@@ -5,7 +5,7 @@ import br.com.bonnepet.domain.Host;
 import br.com.bonnepet.domain.Pet;
 import br.com.bonnepet.domain.User;
 import br.com.bonnepet.domain.enums.BookingStatusEnum;
-import br.com.bonnepet.dto.NewBookingDTO;
+import br.com.bonnepet.dto.*;
 import br.com.bonnepet.repository.BookingRepository;
 import br.com.bonnepet.repository.HostRepository;
 import br.com.bonnepet.repository.PetRepository;
@@ -76,5 +76,40 @@ public class BookingService {
 
         host.getBookings().add(booking);
         hostRepository.save(host);
+    }
+
+    @Transactional
+    public List<HostDTO> getRequestedBookings() {
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        User user = userRepository.findById(userSS.getId()).orElse(new User());
+
+        List<Booking> bookList = user.getBookings();
+
+        List<HostDTO> hostDTOList = new ArrayList<>();
+        for (Booking booking : bookList) {
+            ProfileDTO hostProfileDTO = new ProfileDTO(booking.getHost().getUser());
+            List<PetDTO> petHostDTOList = getPetDTOList(booking.getHost().getUser().getPets());
+            HostDTO hostDTO = new HostDTO(hostProfileDTO, petHostDTOList, booking.getHost().getPrice().toString(),
+                    booking.getHost().getPreferenceSizes(), booking.getHost().getAbout());
+            hostDTO.setId(booking.getHost().getId().toString());
+            BookingDetailsDTO bookingDetailsDTO = new BookingDetailsDTO(booking);
+            hostDTO.setBookingDetailsDTO(bookingDetailsDTO);
+            hostDTOList.add(hostDTO);
+        }
+        return hostDTOList;
+    }
+
+    private List<PetDTO> getPetDTOList(List<Pet> petList) {
+        List<PetDTO> petDTOList = new ArrayList<>();
+        for (Pet pet : petList) {
+            PetDTO petDTO = new PetDTO(pet);
+            petDTOList.add(petDTO);
+        }
+        return petDTOList;
     }
 }
