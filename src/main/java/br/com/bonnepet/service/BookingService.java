@@ -104,6 +104,31 @@ public class BookingService {
         return hostDTOList;
     }
 
+    @Transactional
+    public List<HostBookingDTO> getBookingsHost() {
+
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        Host host = hostRepository.findByUserId(userSS.getId());
+
+        if (host == null) {
+            throw new ValidationException(ExceptionMessages.NOT_A_HOST);
+        }
+
+        List<HostBookingDTO> hostBookingDTOList = new ArrayList<>();
+        for (Booking booking : host.getBookings()) {
+            ProfileDTO profileDTO = new ProfileDTO(booking.getUser());
+            BookingDetailsDTO bookingDetailsDTO = new BookingDetailsDTO(booking);
+            HostBookingDTO hostBookingDTO = new HostBookingDTO(profileDTO, bookingDetailsDTO);
+            hostBookingDTOList.add(hostBookingDTO);
+        }
+        return hostBookingDTOList;
+    }
+
     private List<PetDTO> getPetDTOList(List<Pet> petList) {
         List<PetDTO> petDTOList = new ArrayList<>();
         for (Pet pet : petList) {

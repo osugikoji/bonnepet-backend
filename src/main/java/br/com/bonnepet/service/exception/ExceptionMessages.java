@@ -13,4 +13,6 @@ public class ExceptionMessages {
     public final static String CANNOT_BOOK_YOURSELF = "Você não pode reservar para si mesmo";
 
     public final static String BOOK_ALREADY_REQUESTED = "Reserva já solicitada";
+
+    public final static String NOT_A_HOST = "NOT_A_HOST";
 }

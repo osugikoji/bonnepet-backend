@@ -1,5 +1,6 @@
 package br.com.bonnepet.resource;
 
+import br.com.bonnepet.dto.HostBookingDTO;
 import br.com.bonnepet.dto.HostDTO;
 import br.com.bonnepet.dto.NewBookingDTO;
 import br.com.bonnepet.service.BookingService;
@@ -29,4 +30,9 @@ public class BookResource {
         return ResponseEntity.ok(bookingDTOList);
     }
 
+    @GetMapping("/host")
+    public ResponseEntity<List<HostBookingDTO>> getBookingsHost() {
+        List<HostBookingDTO> hostBookingDTOList = bookingService.getBookingsHost();
+        return ResponseEntity.ok(hostBookingDTOList);
+    }
 }

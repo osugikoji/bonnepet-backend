@@ -27,12 +27,15 @@ public class BookingDetailsDTO implements Serializable {
 
     private String status;
 
+    private String stayDays;
+
     public BookingDetailsDTO(Booking booking) {
         stayInitialDate = DateHelper.parseToDate(booking.getStayInitialDate());
         stayFinalDate = DateHelper.parseToDate(booking.getStayFinalDate());
         petDTO = getPetListDTO(booking.getPetList());
         totalPrice = booking.getTotalPrice();
         status = booking.getStatus();
+        stayDays = DateHelper.daysBetween(booking.getStayInitialDate(), booking.getStayFinalDate()).toString();
     }
 
     private List<PetDTO> getPetListDTO(List<Pet> petList) {
