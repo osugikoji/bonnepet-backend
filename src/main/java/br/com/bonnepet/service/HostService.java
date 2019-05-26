@@ -100,7 +100,7 @@ public class HostService {
 
             List<Booking> userAndHostBookings = bookingRepository.findBookingsByHostAndUser(host, user);
             for (Booking booking : userAndHostBookings) {
-                if (!BookingStatusEnum.FINALIZED.name().equals(booking.getStatus())) {
+                if (!BookingStatusEnum.FINALIZED.name().equals(booking.getStatus()) && !BookingStatusEnum.REFUSED.name().equals(booking.getStatus())) {
                     return new BookingDetailsDTO(booking);
                 }
             }

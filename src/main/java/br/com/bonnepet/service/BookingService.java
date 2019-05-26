@@ -53,7 +53,7 @@ public class BookingService {
 
         List<Booking> userAndHostBookings = bookingRepository.findBookingsByHostAndUser(host, user);
         for (Booking booking : userAndHostBookings) {
-            if (!BookingStatusEnum.FINALIZED.name().equals(booking.getStatus())) {
+            if (!BookingStatusEnum.FINALIZED.name().equals(booking.getStatus()) && !BookingStatusEnum.REFUSED.name().equals(booking.getStatus())) {
                 throw new ValidationException(ExceptionMessages.BOOK_ALREADY_REQUESTED);
             }
         }
@@ -152,6 +152,27 @@ public class BookingService {
         userRepository.save(user);
 
         bookingRepository.delete(booking);
+    }
+
+    @Transactional
+    public HostBookingDTO refuseBooking(Integer id) {
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        Booking booking = bookingRepository.findById(id).orElse(new Booking());
+
+        if (!BookingStatusEnum.OPEN.name().equals(booking.getStatus())) {
+            throw new ValidationException(ExceptionMessages.CANNOT_REFUSE_BOOKING);
+        }
+        booking.setStatus(BookingStatusEnum.REFUSED.name());
+        booking = bookingRepository.save(booking);
+
+        ProfileDTO profileDTO = new ProfileDTO(booking.getUser());
+        BookingDetailsDTO bookingDetailsDTO = new BookingDetailsDTO(booking);
+        return new HostBookingDTO(profileDTO, bookingDetailsDTO);
     }
 
     private List<PetDTO> getPetDTOList(List<Pet> petList) {

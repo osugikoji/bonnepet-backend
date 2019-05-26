@@ -41,4 +41,10 @@ public class BookResource {
         bookingService.cancelBooking(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/refuse")
+    public ResponseEntity<HostBookingDTO> refuseBooking(@PathVariable Integer id) {
+        HostBookingDTO hostBookingDTO = bookingService.refuseBooking(id);
+        return ResponseEntity.ok(hostBookingDTO);
+    }
 }
