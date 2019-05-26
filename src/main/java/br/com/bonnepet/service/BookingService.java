@@ -175,6 +175,27 @@ public class BookingService {
         return new HostBookingDTO(profileDTO, bookingDetailsDTO);
     }
 
+    @Transactional
+    public HostBookingDTO acceptBooking(Integer id) {
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        Booking booking = bookingRepository.findById(id).orElse(new Booking());
+
+        if (!BookingStatusEnum.OPEN.name().equals(booking.getStatus())) {
+            throw new ValidationException(ExceptionMessages.CANNOT_REFUSE_BOOKING);
+        }
+        booking.setStatus(BookingStatusEnum.CONFIRMED.name());
+        booking = bookingRepository.save(booking);
+
+        ProfileDTO profileDTO = new ProfileDTO(booking.getUser());
+        BookingDetailsDTO bookingDetailsDTO = new BookingDetailsDTO(booking);
+        return new HostBookingDTO(profileDTO, bookingDetailsDTO);
+    }
+
     private List<PetDTO> getPetDTOList(List<Pet> petList) {
         List<PetDTO> petDTOList = new ArrayList<>();
         for (Pet pet : petList) {

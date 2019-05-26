@@ -3,11 +3,7 @@ package br.com.bonnepet.service;
 import br.com.bonnepet.domain.Address;
 import br.com.bonnepet.domain.City;
 import br.com.bonnepet.domain.User;
-import br.com.bonnepet.dto.AddressDTO;
-import br.com.bonnepet.dto.EditProfileDTO;
-import br.com.bonnepet.dto.PictureDTO;
-import br.com.bonnepet.dto.ProfileDTO;
-import br.com.bonnepet.dto.NewUserDTO;
+import br.com.bonnepet.dto.*;
 import br.com.bonnepet.helper.DateHelper;
 import br.com.bonnepet.repository.CityRepository;
 import br.com.bonnepet.repository.UserRepository;
@@ -88,7 +84,9 @@ public class UserService {
         user.setCellphone(editProfileDTO.getCellphone());
         user.setAddress(address);
 
-        return new EditProfileDTO(userRepository.save(user));
+        user = userRepository.save(user);
+
+        return new EditProfileDTO(user);
     }
 
     public PictureDTO uploadProfilePicture(Integer id, MultipartFile multipartFile) {
@@ -113,9 +111,16 @@ public class UserService {
         }
 
         User user = userRepository.findById(userSS.getId()).orElse(null);
-
         assert user != null;
-        return new ProfileDTO(user);
+
+        ProfileDTO profileDTO = new ProfileDTO(user);
+
+        if (user.getHost() != null) {
+            EditHostDTO editHostDTO = new EditHostDTO(user.getHost());
+            profileDTO.setEditHostDTO(editHostDTO);
+        }
+
+        return profileDTO;
     }
 
     public static UserSS getUserAuthentication() {

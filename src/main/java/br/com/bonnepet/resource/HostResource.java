@@ -1,5 +1,7 @@
 package br.com.bonnepet.resource;
 
+import br.com.bonnepet.dto.EditHostDTO;
+import br.com.bonnepet.dto.EditProfileDTO;
 import br.com.bonnepet.dto.HostDTO;
 import br.com.bonnepet.dto.NewHostDTO;
 import br.com.bonnepet.service.HostService;
@@ -33,5 +35,11 @@ public class HostResource {
     public ResponseEntity<List<HostDTO>> getAllHosts() {
         List<HostDTO> petList = hostService.getAllHosts();
         return ResponseEntity.ok(petList);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<Void> editHost(@Valid @RequestBody EditHostDTO editHostDTO) {
+        hostService.editHost(editHostDTO);
+        return ResponseEntity.noContent().build();
     }
 }

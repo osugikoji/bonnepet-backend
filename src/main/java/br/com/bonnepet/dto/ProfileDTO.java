@@ -27,6 +27,8 @@ public class ProfileDTO {
 
     private AddressDTO addressDTO;
 
+    private EditHostDTO editHostDTO;
+
     public ProfileDTO(User user) {
         id = user.getId().toString();
         profileImageURL = user.getPictureUrl();

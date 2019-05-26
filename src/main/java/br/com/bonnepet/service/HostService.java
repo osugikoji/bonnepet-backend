@@ -13,6 +13,7 @@ import br.com.bonnepet.service.exception.ValidationException;
 import com.amazonaws.services.licensemanager.model.AuthorizationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -91,6 +92,27 @@ public class HostService {
         }
 
         return hostReturnList;
+    }
+
+    @Transactional
+    public void editHost(EditHostDTO editHostDTO) {
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        User user = userRepository.findById(userSS.getId()).orElse(new User());
+
+        Host host = user.getHost();
+        host.setPrice(new BigDecimal(editHostDTO.getPrice()));
+        host.setAbout(editHostDTO.getAbout());
+        List<Size> sizeList = sizeRepository.findAllByNameIn(editHostDTO.getSizeList());
+        host.setPreferenceSizes(sizeList);
+
+        user.setHost(host);
+
+        userRepository.save(user);
     }
 
     private BookingDetailsDTO getBookDetailsDTO(Host host) {
