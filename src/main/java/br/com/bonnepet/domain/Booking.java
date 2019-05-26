@@ -40,7 +40,7 @@ public class Booking implements Serializable {
     private User user;
 
     @JoinColumn(name = "host_id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Host host;
 
     @ManyToMany

@@ -17,6 +17,8 @@ import java.util.List;
 public class BookingDetailsDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private String id;
+
     private String stayInitialDate;
 
     private String stayFinalDate;
@@ -30,6 +32,7 @@ public class BookingDetailsDTO implements Serializable {
     private String stayDays;
 
     public BookingDetailsDTO(Booking booking) {
+        id = booking.getId().toString();
         stayInitialDate = DateHelper.parseToDate(booking.getStayInitialDate());
         stayFinalDate = DateHelper.parseToDate(booking.getStayFinalDate());
         petDTO = getPetListDTO(booking.getPetList());

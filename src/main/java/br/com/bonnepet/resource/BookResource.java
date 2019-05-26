@@ -35,4 +35,10 @@ public class BookResource {
         List<HostBookingDTO> hostBookingDTOList = bookingService.getBookingsHost();
         return ResponseEntity.ok(hostBookingDTOList);
     }
+
+    @DeleteMapping("/{id}/cancel")
+    public ResponseEntity<Void> cancelBooking(@PathVariable Integer id) {
+        bookingService.cancelBooking(id);
+        return ResponseEntity.noContent().build();
+    }
 }

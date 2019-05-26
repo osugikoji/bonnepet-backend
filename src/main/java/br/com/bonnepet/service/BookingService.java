@@ -129,6 +129,31 @@ public class BookingService {
         return hostBookingDTOList;
     }
 
+    @Transactional
+    public void cancelBooking(Integer id) {
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        Booking booking = bookingRepository.findById(id).orElse(new Booking());
+
+        if (!BookingStatusEnum.OPEN.name().equals(booking.getStatus())) {
+            throw new ValidationException(ExceptionMessages.CANNOT_CANCEL_BOOKING);
+        }
+
+        Host host = booking.getHost();
+        host.getBookings().remove(booking);
+        hostRepository.save(host);
+
+        User user = booking.getUser();
+        user.getBookings().remove(booking);
+        userRepository.save(user);
+
+        bookingRepository.delete(booking);
+    }
+
     private List<PetDTO> getPetDTOList(List<Pet> petList) {
         List<PetDTO> petDTOList = new ArrayList<>();
         for (Pet pet : petList) {

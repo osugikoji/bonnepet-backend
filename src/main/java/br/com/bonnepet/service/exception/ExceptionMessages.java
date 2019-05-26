@@ -15,4 +15,6 @@ public class ExceptionMessages {
     public final static String BOOK_ALREADY_REQUESTED = "Reserva já solicitada";
 
     public final static String NOT_A_HOST = "NOT_A_HOST";
+
+    public final static String CANNOT_CANCEL_BOOKING = "Não é possível cancelar a reserva";
 }
