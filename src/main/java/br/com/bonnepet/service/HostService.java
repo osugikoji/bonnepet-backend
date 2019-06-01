@@ -69,6 +69,7 @@ public class HostService {
         }
         hostDTO = new HostDTO(profileDTO, petDTOList, host.getPrice().toBigInteger().toString(), host.getPreferenceSizes(), host.getAbout());
         hostDTO.setBookingDetailsDTO(getBookDetailsDTO(host));
+        hostDTO.setId(host.getId().toString());
 
         return hostDTO;
     }
