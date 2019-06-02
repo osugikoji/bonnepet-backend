@@ -41,6 +41,10 @@ public class HostService {
             throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
         }
 
+        if (new BigDecimal(newHostDTO.getPrice()).intValue() <= 0) {
+            throw new ValidationException(ExceptionMessages.INVALID_PRICE);
+        }
+
         User user = userRepository.findById(userSS.getId()).orElse(new User());
 
         Host host = user.getHost();
@@ -101,6 +105,10 @@ public class HostService {
 
         if (userSS == null) {
             throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        if (new BigDecimal(editHostDTO.getPrice()).intValue() <= 0) {
+            throw new ValidationException(ExceptionMessages.INVALID_PRICE);
         }
 
         User user = userRepository.findById(userSS.getId()).orElse(new User());

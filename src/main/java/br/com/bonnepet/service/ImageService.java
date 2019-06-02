@@ -27,8 +27,6 @@ public class ImageService {
 
 	public InputStream getProfileFormat(MultipartFile multipartFile) {
 		BufferedImage jpgImage = getJpgImageFromFile(multipartFile);
-		jpgImage = cropSquare(jpgImage);
-		jpgImage = resize(jpgImage, SIZE);
 		return getInputStream(jpgImage, JPG_FORMAT);
 
 	}

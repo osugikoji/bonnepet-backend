@@ -24,15 +24,21 @@ public class PetResource {
     }
 
     @PostMapping("/{id}/picture")
-    public ResponseEntity<Void> uploadPetPicture(@RequestParam(name = "file") MultipartFile file, @PathVariable Integer id) {
-        petService.uploadPetPicture(id, file);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<PetDTO> uploadPetPicture(@RequestParam(name = "file") MultipartFile file, @PathVariable Integer id) {
+        PetDTO petDTO = petService.uploadPetPicture(id, file);
+        return ResponseEntity.ok(petDTO);
     }
 
     @GetMapping()
     public ResponseEntity<List<PetDTO>> getAllPets() {
         List<PetDTO> petList = petService.getAllPets();
         return ResponseEntity.ok(petList);
+    }
+
+    @PutMapping("/updatePet")
+    public ResponseEntity<PetDTO> updatePet(@Valid @RequestBody PetDTO petDTO) {
+        petDTO = petService.updatePet(petDTO);
+        return ResponseEntity.ok(petDTO);
     }
 
 }

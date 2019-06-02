@@ -4,6 +4,7 @@ import br.com.bonnepet.domain.Behaviour;
 import br.com.bonnepet.domain.Pet;
 import br.com.bonnepet.domain.User;
 import br.com.bonnepet.dto.PetDTO;
+import br.com.bonnepet.helper.DateHelper;
 import br.com.bonnepet.repository.BehaviourRepository;
 import br.com.bonnepet.repository.PetRepository;
 import br.com.bonnepet.repository.UserRepository;
@@ -68,14 +69,40 @@ public class PetService {
         return petList;
     }
 
-    public void uploadPetPicture(Integer id, MultipartFile multipartFile) {
+    public PetDTO updatePet(PetDTO petDTO) {
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        Pet pet = petRepository.findById(Integer.parseInt(petDTO.getId())).orElse(new Pet());
+
+        pet.setName(petDTO.getName());
+        pet.setBirthDate(DateHelper.parseToDate(petDTO.getBirthDate()));
+        pet.setBreed(petDTO.getBreed());
+        pet.setSize(petDTO.getSize());
+        pet.setObservations(petDTO.getObservations());
+
+        List<Behaviour> behaviourList = behaviourRepository.findAllByNameIn(petDTO.getBehaviours());
+
+        pet.setBehaviours(behaviourList);
+
+        pet = petRepository.save(pet);
+
+        return petDTO;
+    }
+
+    public PetDTO uploadPetPicture(Integer id, MultipartFile multipartFile) {
         Optional<Pet> pet = petRepository.findById(id);
+        PetDTO petDTO = new PetDTO();
 
         if (pet.isPresent()) {
             String urlImage;
             urlImage = s3Service.uploadFile(false, pet.get().getId(), multipartFile);
             pet.get().setPictureUrl(urlImage);
-            petRepository.save(pet.get());
+            petDTO = new PetDTO(petRepository.save(pet.get()));
         }
+        return petDTO;
     }
 }
