@@ -43,6 +43,10 @@ public class Booking implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Host host;
 
+    @JoinColumn(name = "rating_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Rating rating;
+
     @ManyToMany
     private List<Pet> petList = new ArrayList<>();
 

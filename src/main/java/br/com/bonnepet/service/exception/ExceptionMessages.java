@@ -20,5 +20,9 @@ public class ExceptionMessages {
 
     public final static String CANNOT_REFUSE_BOOKING = "Não é possível recusar a reserva";
 
+    public final static String CANNOT_FINALIZE_BOOKING = "Não é possível finalizar a reserva";
+
+    public final static String BOOKING_ALREADY_FINALIZED = "Esta reserva já foi finalizada";
+
     public final static String INVALID_PRICE = "Diária inválida";
 }

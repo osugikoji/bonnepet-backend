@@ -1,9 +1,6 @@
 package br.com.bonnepet.resource;
 
-import br.com.bonnepet.dto.EditHostDTO;
-import br.com.bonnepet.dto.EditProfileDTO;
-import br.com.bonnepet.dto.HostDTO;
-import br.com.bonnepet.dto.NewHostDTO;
+import br.com.bonnepet.dto.*;
 import br.com.bonnepet.service.HostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +37,12 @@ public class HostResource {
     @PutMapping("/edit")
     public ResponseEntity<Void> editHost(@Valid @RequestBody EditHostDTO editHostDTO) {
         hostService.editHost(editHostDTO);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/rate")
+    public ResponseEntity<Void> rateHost(@Valid @RequestBody RateDTO rateDTO) {
+        hostService.rateHost(rateDTO);
         return ResponseEntity.noContent().build();
     }
 }

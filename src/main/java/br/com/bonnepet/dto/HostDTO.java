@@ -29,6 +29,10 @@ public class HostDTO implements Serializable {
 
     private BookingDetailsDTO bookingDetailsDTO;
 
+    private List<RateDetailsDTO> rateDTOList;
+
+    private String rateAvg;
+
     public HostDTO(ProfileDTO profileDTO, List<PetDTO> petDTO, String price, List<Size> sizePreferenceList, String about) {
         this.profileDTO = profileDTO;
         this.petDTO = petDTO;

@@ -85,14 +85,28 @@ public class HostService {
         for (Host host : hostList) {
             HostDTO hostDTO;
             ProfileDTO profileDTO = new ProfileDTO(host.getUser());
+
             List<PetDTO> petDTOList = new ArrayList<>();
             for (Pet pet : host.getUser().getPets()) {
                 petDTOList.add(new PetDTO(pet));
             }
-            hostDTO = new HostDTO(profileDTO, petDTOList, host.getPrice().toBigInteger().toString(), host.getPreferenceSizes(), host.getAbout());
+
+            List<RateDetailsDTO> rateDTOList = new ArrayList<>();
+            for (Rating rating : host.getRatings()) {
+                rateDTOList.add(new RateDetailsDTO(rating));
+            }
+
+            hostDTO = new HostDTO(profileDTO,
+                    petDTOList,
+                    host.getPrice().toBigInteger().toString(),
+                    host.getPreferenceSizes(),
+                    host.getAbout());
             hostDTO.setId(host.getId().toString());
 
+            if (host.getAverageRate() != null) hostDTO.setRateAvg(host.getAverageRate().toString());
+
             hostDTO.setBookingDetailsDTO(getBookDetailsDTO(host));
+            hostDTO.setRateDTOList(rateDTOList);
             hostReturnList.add(hostDTO);
         }
 
@@ -122,6 +136,40 @@ public class HostService {
         user.setHost(host);
 
         userRepository.save(user);
+    }
+
+    public void rateHost(RateDTO rateDTO) {
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        Integer bookingId = Integer.parseInt(rateDTO.getBookingId());
+
+        Booking booking = bookingRepository.findById(bookingId).orElse(new Booking());
+
+        Rating rating = new Rating(new BigDecimal(rateDTO.getRate()), rateDTO.getFeedback());
+        rating.setHost(booking.getHost());
+        rating.setBooking(booking);
+
+        booking.getHost().getRatings().add(rating);
+
+        BigDecimal avgRating = calculateAverageRate(booking.getHost().getRatings());
+        booking.getHost().setAverageRate(avgRating);
+
+        booking.setRating(rating);
+
+        bookingRepository.save(booking);
+    }
+
+    private BigDecimal calculateAverageRate(List<Rating> hostRatings) {
+        double sumRatings = 0;
+        for (Rating rating : hostRatings) {
+            sumRatings += rating.getRate().longValue();
+        }
+        double avgRatings = sumRatings / hostRatings.size();
+        return new BigDecimal(avgRatings);
     }
 
     private BookingDetailsDTO getBookDetailsDTO(Host host) {

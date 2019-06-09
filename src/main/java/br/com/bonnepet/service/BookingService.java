@@ -196,6 +196,31 @@ public class BookingService {
         return new HostBookingDTO(profileDTO, bookingDetailsDTO);
     }
 
+    @Transactional
+    public HostBookingDTO finalizeBooking(Integer id) {
+        UserSS userSS = UserService.getUserAuthentication();
+
+        if (userSS == null) {
+            throw new AuthorizationException(ExceptionMessages.ACCESS_DENIED);
+        }
+
+        Booking booking = bookingRepository.findById(id).orElse(new Booking());
+
+        if (BookingStatusEnum.FINALIZED.name().equals(booking.getStatus())) {
+            throw new ValidationException(ExceptionMessages.BOOKING_ALREADY_FINALIZED);
+        }
+
+        if (!BookingStatusEnum.CONFIRMED.name().equals(booking.getStatus())) {
+            throw new ValidationException(ExceptionMessages.CANNOT_FINALIZE_BOOKING);
+        }
+        booking.setStatus(BookingStatusEnum.FINALIZED.name());
+        booking = bookingRepository.save(booking);
+
+        ProfileDTO profileDTO = new ProfileDTO(booking.getUser());
+        BookingDetailsDTO bookingDetailsDTO = new BookingDetailsDTO(booking);
+        return new HostBookingDTO(profileDTO, bookingDetailsDTO);
+    }
+
     private List<PetDTO> getPetDTOList(List<Pet> petList) {
         List<PetDTO> petDTOList = new ArrayList<>();
         for (Pet pet : petList) {

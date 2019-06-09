@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -101,20 +100,20 @@ public class DBService {
                 DateHelper.parseToDate("08/03/2018"),
                 PetSizeEnum.SMALL.name(),
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-                userList.get(2));
+                userList.get(1));
         pet3.getBehaviours().addAll(Arrays.asList(behaviourList.get(0), behaviourList.get(1), behaviourList.get(2)));
-        userList.get(2).getPets().add(pet3);
+        userList.get(1).getPets().add(pet3);
 
         petRepository.saveAll(Arrays.asList(pet1, pet2, pet3));
-        userRepository.saveAll(Arrays.asList(userList.get(0), userList.get(2)));
+        userRepository.saveAll(Arrays.asList(userList.get(0), userList.get(1)));
     }
 
     private void createHost() {
-        Host host1 = new Host(userList.get(0), BigDecimal.valueOf(100), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua");
+        Host host1 = new Host(userList.get(0), BigDecimal.valueOf(100), "Tive vários cachorros ao longo dos anos, portanto tenho bastante experiência! Amo a companhia. Tenho disponibilidade para várias atividades e passeios.");
         host1.getPreferenceSizes().addAll(sizeList);
         userList.get(0).setHost(host1);
 
-        Host host2 = new Host(userList.get(1), BigDecimal.valueOf(200), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua");
+        Host host2 = new Host(userList.get(1), BigDecimal.valueOf(200), "Pretendo trabalhar de uma meneira que inclua todas as necessidades tanto do seu pet quanto as suas. Caso o seu animalzinho precise de cuidados, não se preocupe que além de ser eficiente sempre o manterei informado.");
         host2.getPreferenceSizes().addAll(Arrays.asList(sizeList.get(0), sizeList.get(1)));
         userList.get(1).setHost(host2);
 
